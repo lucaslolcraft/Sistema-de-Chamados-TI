@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Se você for usar @apply, o Tailwind 4 já entende automaticamente 
+   se o @import acima estiver presente. */
