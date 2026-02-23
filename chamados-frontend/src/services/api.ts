@@ -39,28 +39,8 @@ export type AuthResponse = {
 // --- Configuração da Instância do Axios ---
 
 const api = axios.create({
-  // Seus controllers estão na raiz (ex: "/usuarios"), não em "/api"
-  // Ajuste a porta se o seu backend Java rodar em uma diferente (ex: 8080)
   baseURL: 'http://localhost:8080', 
 });
-
-
-/*
- * --------------------------------------------------------------------
- * ⚠️ ATENÇÃO: AUTENTICAÇÃO (O que está faltando)
- * --------------------------------------------------------------------
- * * Todos os seus controllers (menos Categoria) usam um MOCK: `usuarioAutenticado()`.
- * No mundo real, seu front-end precisará enviar um "Token de Autenticação" 
- * (como um JWT) a cada requisição para provar quem ele é.
- * * Quando você implementar o login:
- * 1. O front-end fará um POST para "/login" (você precisará criar esse endpoint).
- * 2. O backend retornará um token (ex: "Bearer ...").
- * 3. O front-end salvará esse token (no localStorage).
- * 4. Você usará o "interceptor" abaixo para adicionar esse token em *todas* * as requisições futuras automaticamente.
- * * Por enquanto, tudo vai funcionar por causa do MOCK no backend.
- * Deixei o código do interceptor comentado abaixo para o futuro:
- */
-
 
 api.interceptors.request.use(
   (config) => {
@@ -69,7 +49,7 @@ api.interceptors.request.use(
       return config;
     }
 
-    const token = localStorage.getItem('authToken'); // Onde vamos salvar o token
+    const token = localStorage.getItem('authToken'); 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -203,7 +183,6 @@ export const deleteChamado = async (id: number): Promise<void> => {
 };
 
 export const updateChamadoStatus = async (id: number, status: string): Promise<Chamado> => {
-  // @RequestParam vira 'params' no config do Axios
   const response = await api.patch<Chamado>(`/chamados/${id}/alterar-status`, null, {
     params: { status }
   });
@@ -211,7 +190,6 @@ export const updateChamadoStatus = async (id: number, status: string): Promise<C
 };
 
 export const assumirChamado = async (id: number): Promise<Chamado> => {
-  // O segundo 'null' é porque não estamos enviando um corpo (body)
   const response = await api.patch<Chamado>(`/chamados/${id}/assumir`, null);
   return response.data;
 };
@@ -230,7 +208,6 @@ export const atribuirChamado = async (chamadoId: number, tecnicoId: number): Pro
 
 // ---  Auth Service (Mapeado de AuthController.java) ---
 export const login = async (data: AuthRequest): Promise<AuthResponse> => {
-  // O endpoint de login é PÚBLICO
   const response = await api.post<AuthResponse>('/auth/login', data);
   return response.data;
 };
