@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCategorias, getSetores, createChamado } from '../services/api';
 import type { Categoria, Setor } from '../types/models';
-// Importamos o tipo DTO que definimos na api.ts (se não tiver exportado lá, defina aqui ou use 'any')
 import type { CreateChamadoDTO } from '../services/api'; 
 
 export function NovoChamadoPage() {
@@ -25,7 +24,6 @@ export function NovoChamadoPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   
-  // --- EFFECT: Buscar dados dos Dropdowns ---
   useEffect(() => {
     const loadDropdownData = async () => {
       try {
@@ -45,13 +43,11 @@ export function NovoChamadoPage() {
     loadDropdownData();
   }, []); 
 
-  // --- HANDLER: Enviar o Formulário ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
 
-    // Validação Simples
     if (!titulo || !descricao || !categoriaId) {
       setError("Por favor, preencha Título, Descrição e Categoria.");
       return;
@@ -59,7 +55,6 @@ export function NovoChamadoPage() {
 
     setSubmitting(true);
 
-    // Montar Payload
     const payload: CreateChamadoDTO = {
       titulo: titulo,
       descricao: descricao,
@@ -74,7 +69,6 @@ export function NovoChamadoPage() {
       await createChamado(payload);
       setSuccess("Chamado criado com sucesso! Redirecionando...");
       
-      // Limpa campos
       setTitulo('');
       setDescricao('');
       setCategoriaId('');
