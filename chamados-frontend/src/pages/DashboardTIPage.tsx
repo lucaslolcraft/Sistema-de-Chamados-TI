@@ -84,7 +84,7 @@ export function DashboardTIPage() {
     setSortConfig({ key, direction });
   };
 
-  // Lógica de ordenação (useMemo para otimizar e não reordenar sem necessidade)
+  // Lógica de ordenação 
   const sortedChamados = useMemo(() => {
     if (!sortConfig) return chamados;
 
