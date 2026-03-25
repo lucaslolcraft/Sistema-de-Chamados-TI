@@ -17,7 +17,7 @@ export function AppLayout() {
       {/* Sidebar */}
       <aside className="w-64 bg-slate-900 text-white flex flex-col">
         <div className="p-6 text-xl font-bold border-b border-slate-800 text-blue-400">
-          IT Support
+          Suporte TI
         </div>
         <nav className="flex-1 p-4 space-y-2">
           {usuario.role === 'ROLE_TI' || usuario.role === 'ROLE_ADM' ? (

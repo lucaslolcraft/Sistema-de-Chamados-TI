@@ -125,23 +125,6 @@ export function DashboardUsuarioPage() {
             ))}
           </tbody>
         </table>
-
-        {/* Estado Vazio (Empty State) */}
-        {chamados.length === 0 && (
-          <div className="p-12 text-center flex flex-col items-center justify-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-400 text-2xl">
-              🎫
-            </div>
-            <h3 className="text-lg font-bold text-slate-700">Você ainda não tem chamados</h3>
-            <p className="text-slate-500 text-sm mb-6">Precisa de ajuda com algo? Abra um novo ticket agora.</p>
-            <Link 
-              to="/usuario/novo-chamado" 
-              className="text-blue-600 font-semibold hover:underline"
-            >
-              Criar meu primeiro chamado
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );
