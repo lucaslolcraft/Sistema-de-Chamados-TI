@@ -36,6 +36,7 @@ O sistema foi iniciado para auxiliar na organização de demandas de TI, porém 
 - Spring Boot
 - Maven
 - API REST
+- MySQL
 
 ### Frontend
 - Vite
@@ -53,6 +54,7 @@ O sistema foi iniciado para auxiliar na organização de demandas de TI, porém 
 - Maven
 - Node.js (versão 18 ou superior)
 - Git
+- MySQL
 
 ---
 
