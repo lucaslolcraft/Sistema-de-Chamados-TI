@@ -197,13 +197,6 @@ export function DashboardTIPage() {
             ))}
           </tbody>
         </table>
-
-        {sortedChamados.length === 0 && (
-          <div className="p-12 text-center text-slate-400">
-            <p className="text-lg">Nenhum chamado encontrado na fila.</p>
-            <p className="text-sm">Tudo em dia por aqui!</p>
-          </div>
-        )}
       </div>
     </div>
   );

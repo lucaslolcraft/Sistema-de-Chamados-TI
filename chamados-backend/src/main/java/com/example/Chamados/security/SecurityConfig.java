@@ -19,7 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -59,7 +58,7 @@ public class SecurityConfig {
 
     // O Filtro de CORS (COPIE E COLE do seu WebConfig)
     @Bean
-    public CorsFilter corsFilter() {
+    public UrlBasedCorsConfigurationSource  corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
@@ -73,7 +72,7 @@ public class SecurityConfig {
         config.addAllowedMethod("PATCH");
         
         source.registerCorsConfiguration("/**", config); 
-        return new CorsFilter(source);
+        return source;
     }
 
 
@@ -82,15 +81,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             // ... (seus filtros de CORS, CSRF, etc. continuam aqui)
-            .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider())
+            //.addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
+        	.cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        	.csrf(csrf -> csrf.disable())
+        	.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        	.authenticationProvider(authenticationProvider())
             
             // --- BLOCO DE REGRAS ATUALIZADO ---
             .authorizeHttpRequests(authz -> authz
                 
                 // 1. Regras Públicas
+            	.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            	.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers("/auth/login", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
                 // 2. Regras de ADM
